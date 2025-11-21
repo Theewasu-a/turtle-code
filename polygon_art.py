@@ -1,138 +1,171 @@
 import turtle
 import random
 
-def draw_polygon(num_sides, size, orientation, location, color, border_size):
-    turtle.penup()
-    turtle.goto(location[0], location[1])
-    turtle.setheading(orientation)
-    turtle.color(color)
-    turtle.pensize(border_size)
-    turtle.pendown()
-    for _ in range(num_sides):
-        turtle.forward(size)
-        turtle.left(360/num_sides)
-    turtle.penup()
+class Polygon:
+    def __init__(self, num_sides, size, orientation, location, color, border_size):
+        self.num_sides = num_sides
+        self.size = size
+        self.orientation = orientation
+        self.location = location
+        self.color = color
+        self.border_size = border_size
 
-def get_new_color():
-    return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    def draw(self):
+        turtle.penup()
+        turtle.goto(self.location[0], self.location[1])
+        turtle.setheading(self.orientation)
+        turtle.color(self.color)
+        turtle.pensize(self.border_size)
+        turtle.pendown()
 
-turtle.speed(0)
-turtle.bgcolor('black')
-turtle.tracer(0)
-turtle.colormode(255)
+        for _ in range(self.num_sides):
+            turtle.forward(self.size)
+            turtle.left(360 / self.num_sides)
 
-# draw a polygon at a random location, orientation, color, and border line thickness
-shape = input('Which art do you want to generate? Enter a number between 1 to 9 inclusive: ')
-for i in range(20):
-    if shape == '1':
-        num_sides = 3
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 15)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '2':
-        num_sides = 4
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 15)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '3':
-        num_sides = 5
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 15)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '4':
-        num_sides = random.randint(3, 5)
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 15)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '5':
-        num_sides = 3
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 10)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-        reduction_ratio = 0.75
-        for _ in range(2):
-            size *= reduction_ratio
-            draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '6':
-        num_sides = 4
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 10)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-        reduction_ratio = 0.75
-        for _ in range(2):
-            size *= reduction_ratio
-            draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '7':
-        num_sides = 5
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 10)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-        reduction_ratio = 0.75
-        for _ in range(2):
-            size *= reduction_ratio
-            draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '8':
-        num_sides = random.randint(3, 5)
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 10)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-        reduction_ratio = 0.75
-        for _ in range(2):
-            size *= reduction_ratio
-            draw_polygon(num_sides, size, orientation, location, color, border_size)
-    elif shape == '9':
-        num_sides = random.randint(3, 5)
-        size = random.randint(50, 150)
-        orientation = random.randint(0, 90)
-        location = [random.randint(-300, 300), random.randint(-200, 200)]
-        color = get_new_color()
-        border_size = random.randint(1, 10)
-        draw_polygon(num_sides, size, orientation, location, color, border_size)
-        reduction_ratio = 0.75
-        for _ in range(random.randint(0,2)):
-            size *= reduction_ratio
-            draw_polygon(num_sides, size, orientation, location, color, border_size)
+        turtle.penup()
 
 
-# specify a reduction ratio to draw a smaller polygon inside the one above
-reduction_ratio = 0.75
+class ArtController:
 
-# reposition the turtle and get a new location
-turtle.penup()
-turtle.forward(size*(1-reduction_ratio)/2)
-turtle.left(90)
-turtle.forward(size*(1-reduction_ratio)/2)
-turtle.right(90)
-location[0] = turtle.pos()[0]
-location[1] = turtle.pos()[1]
+    def __init__(self):
+        turtle.bgcolor("black")
+        turtle.speed(0)
+        turtle.colormode(255)
+        turtle.tracer(0)
 
-# adjust the size according to the reduction ratio
+    def get_new_color(self):
+        return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
-# draw the second polygon embedded inside the original 
+    def random_location(self):
+        return [random.randint(-300,300),
+                random.randint(-250,250)]
 
-# hold the window; close it by clicking the window close 'x' mark
-turtle.done()
+    def draw_single_polygon(self, sides):
+        size = random.randint(50, 150)
+        angle = random.randint(0, 90)
+        color = self.get_new_color()
+        border = random.randint(1, 10)
+        location = [random.randint(-300, 300), random.randint(-200, 200)]
+
+        Polygon(sides, size, angle, location, color, border).draw()
+
+    def art1(self):  
+        for _ in range(20):
+            self.draw_single_polygon(3)
+
+    def art2(self):  
+        for _ in range(20):
+            self.draw_single_polygon(4)
+
+    def art3(self):  
+        for _ in range(20):
+            self.draw_single_polygon(5)
+
+    def art4(self):  
+        for _ in range(20):
+            self.draw_single_polygon(random.choice([3,4,5]))
+
+    def art5(self):
+        for _ in range(20):
+            base_size = random.randint(50, 140)
+            loc = self.random_location()
+            angle = random.randint(0, 360)
+            col = self.get_new_color()
+
+            layers = random.randint(3, 5)
+
+            size = base_size
+            for i in range(layers):
+                border = 3 if i == 0 else 1    
+                Polygon(3, size, angle, loc, col, border).draw()
+                size *= 0.70                    
+                angle += random.randint(-10, 10)
+
+    def art6(self):
+        for _ in range(20):
+            base_size = random.randint(60, 150)
+            loc = self.random_location()
+            angle = random.randint(0, 360)
+            col = self.get_new_color()
+
+            layers = random.randint(4, 6)  
+
+            size = base_size
+            for i in range(layers):
+                border = 3 if i == 0 else 1 
+                Polygon(4, size, angle, loc, col, border).draw()
+
+                size *= 0.70               
+                angle += random.randint(-12, 12)  
+
+    def art7(self):
+        for _ in range(20):
+            base_size = random.randint(60, 150)
+            loc = self.random_location()
+            angle = random.randint(0, 360)
+            col = self.get_new_color()
+
+            layers = random.randint(4, 6)
+
+            size = base_size
+            for i in range(layers):
+                border = 3 if i == 0 else 1
+                Polygon(5, size, angle, loc, col, border).draw()
+
+                size *= 0.70
+                angle += random.randint(-12, 12)
+
+    def art8(self):
+        for _ in range(20):
+            sides = random.choice([3, 4, 5])
+            base_size = random.randint(60, 150)
+            loc = self.random_location()
+            angle = random.randint(0, 360)
+            col = self.get_new_color()
+
+            layers = random.randint(4, 6)
+
+            size = base_size
+            for i in range(layers):
+                border = 3 if i == 0 else 1
+                Polygon(sides, size, angle, loc, col, border).draw()
+                size *= 0.70
+                angle += random.randint(-12, 12)
+
+    def art9(self):
+        for _ in range(20):
+            sides = random.choice([3, 4, 5])
+            size = random.randint(40, 140)
+            loc = self.random_location()
+            angle = random.randint(0, 360)
+            col = self.get_new_color()
+            border = random.randint(1, 5)
+            for _ in range(random.randint(0,5)):
+                Polygon(sides, size, angle, loc, col, border).draw()
+                size *= 0.7
+                angle += random.randint(-12, 12)
+
+
+
+def main():
+    choice = int(input("Which art do you want to generate? Enter a number between 1 to 9 inclusive: "))
+    art = ArtController()
+
+    if   choice == 1: art.art1()
+    elif choice == 2: art.art2()
+    elif choice == 3: art.art3()
+    elif choice == 4: art.art4()
+    elif choice == 5: art.art5()
+    elif choice == 6: art.art6()
+    elif choice == 7: art.art7()
+    elif choice == 8: art.art8()
+    elif choice == 9: art.art9()
+    else:
+        print("Invalid selection.")
+        return
+
+    turtle.update()
+    turtle.done()
+
+if __name__ == "__main__":
+    main()
